@@ -1,0 +1,11 @@
+version: '3'
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile_airflow
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./dags:/usr/local/airflow/dags"
+

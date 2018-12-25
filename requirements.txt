@@ -1,0 +1,8 @@
+praw
+spotipy
+paver
+profilehooks
+pytest
+pytest-cov
+pytest-forked
+pytest-xdist

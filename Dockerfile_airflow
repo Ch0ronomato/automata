@@ -1,0 +1,13 @@
+FROM "puckel/docker-airflow"
+
+ADD ./requirements.txt requirements.txt
+RUN pip install --user -r requirements.txt
+
+ADD ./pavement.py pavement.py
+ADD ./dags dags
+ADD ./test test
+
+ENV PATH "/usr/local/airflow/.local/bin:$PATH"
+
+ENTRYPOINT ["paver"]
+CMD ["test_dags"]
