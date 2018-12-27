@@ -14,13 +14,19 @@ class CurrentDaysBands:
     def get_bands(self, day_to_grab):
         posts = self.get_sub().new(limit=500)
         return [
-            {
-                "band": post.title.split("-")[0].strip(),
-                "album": post.title.split("-")[1].strip(),
-            }
+            self._extract_song_info(post.title)
             for post
             in posts
             if datetime.utcfromtimestamp(post.created_utc).strftime('%Y-%m-%d') == day_to_grab
             and 'youtube.com' in post.url
         ]
 
+    def _extract_song_info(self, post_title):
+        song_info = list(map(str.strip, post_title.split("-")))
+        for i in range(len(song_info)): 
+            piece = song_info[i]
+            for c in "[(":
+                if c in piece:
+                    piece = piece[:piece.index(c)].strip()
+            song_info[i] = piece
+        return dict(zip(["band", "song"], song_info))
