@@ -19,6 +19,7 @@ class CurrentDaysBands:
             in posts
             if datetime.utcfromtimestamp(post.created_utc).strftime('%Y-%m-%d') == day_to_grab
             and 'youtube.com' in post.url
+            and "song" in self._extract_song_info(post.title)
         ]
 
     def _extract_song_info(self, post_title):
