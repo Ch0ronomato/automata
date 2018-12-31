@@ -49,7 +49,7 @@ class SpotifyAPI:
         return datetime.strptime(
             track["album"]["release_date"],
             formats[track["album"]["release_date_precision"]]
-        ) if (track["album"]["release_date_precision"] in formats.keys()) \
+        ) if ("release_date_precision" in track["album"].keys() and track["album"]["release_date_precision"] in formats.keys()) \
           else datetime.now() # just assume it's too new sadly
 
     def create_playlist(self, playlist_name, spotify_album_ids):
