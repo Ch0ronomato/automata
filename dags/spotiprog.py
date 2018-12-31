@@ -1,10 +1,16 @@
 from airflow import DAG
+from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 from integrations.reddit import CurrentDaysBands
 from integrations.spotify import SpotifyAPI
 
-def get_reddit_posts(reddit, **context):
+def get_reddit_posts(**context):
+    reddit = CurrentDaysBands(
+       client_id=Variable.get("REDDIT_CLIENT_ID"),
+       client_secret=Variable.get("REDDIT_CLIENT_SECRET"),
+       user_agent=Variable.get("REDDIT_USER_AGENT")
+    )
     return reddit.get_bands(context['yesterday_ds'])
 
 def get_spotify_albums(spotify, **context):
@@ -28,13 +34,23 @@ default_args = {
 
 dag = DAG('Automata', start_date=datetime(2018, 12, 30), default_args=default_args, schedule_interval=timedelta(days=1))
 
-reddit = CurrentDaysBands()
-spotify = SpotifyAPI()
+user_id = Variable.get("SPOTIFY_CLIENT_USER_ID")
+auth_token = Variable.get("SPOTIFY_CLIENT_TOKEN_CACHE")
+with open(f"/usr/local/airflow/.cache-{user_id}", "w+") as f:
+    print(f"Wrote {auth_token} to /usr/local/airflow/.cache-{user_id}")
+    f.write(auth_token)
+spotify = SpotifyAPI(
+    user_id=user_id,
+    client_id=Variable.get("SPOTIFY_CLIENT_ID"),
+    client_secret=Variable.get("SPOTIFY_CLIENT_SECRET"),
+    redirect_uri=Variable.get("SPOTIFY_CLIENT_REDIRECT_URI"),
+)
+with open(f"/usr/local/airflow/.cache-{user_id}") as f:
+    Variable.set("SPOTIFY_CLIENT_CACHE_TOKEN", f.read())
 
 t1_get_bands = PythonOperator(
     task_id='fetch_reddit_posts',
     python_callable=get_reddit_posts,
-    op_args=[reddit],
     provide_context=True,
     dag=dag
 )

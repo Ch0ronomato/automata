@@ -1,0 +1,10 @@
+{
+	"REDDIT_CLIENT_ID": "youid",
+	"REDDIT_CLIENT_SECRET": "yoursecret",
+	"REDDIT_USER_AGENT": "youruseragent",
+	"SPOTIFY_CLIENT_ID": "yourid",
+	"SPOTIFY_CLIENT_SECRET": "yoursecret",
+	"SPOTIFY_CLIENT_USER_ID": "youruserid",
+	"SPOTIFY_CLIENT_REDIRECT_URI": "probably localhost",
+	"SPOTIFY_CLIENT_TOKEN_CACHE": {}
+}

@@ -1,12 +1,8 @@
 import praw
 from datetime import datetime, timedelta
 class CurrentDaysBands:
-    def __init__(self):
-        self.reddit = praw.Reddit(
-            client_id='nApgfjw6px0iJA',
-            client_secret='yd4dO03N9oJwjXz3SzpOtQZzJYM',
-            user_agent='aws:spotiprog:v0.0.1 (by /u/Chr0nomaton)',
-        )
+    def __init__(self, **praw_config):
+        self.reddit = praw.Reddit(**praw_config)
 
     def get_sub(self):
         return self.reddit.subreddit('progmetal')

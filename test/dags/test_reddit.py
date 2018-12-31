@@ -10,7 +10,8 @@ def get_utc_timestamp(timespan):
     return (now - timespan - epoch).total_seconds()
 
 class TestReddit(unittest.TestCase):
-    def setUp(self):
+    @patch("praw.Reddit")
+    def setUp(self, reddit_mock):
         self.unit = CurrentDaysBands()
 
     @patch("dags.integrations.reddit.CurrentDaysBands.get_sub")

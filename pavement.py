@@ -27,7 +27,12 @@ def makes_a_playlist(args):
     date = args[0]
     from dags.integrations.reddit import CurrentDaysBands
     from dags.integrations.spotify import SpotifyAPI
-    spotify = SpotifyAPI()
+    spotify = SpotifyAPI(
+        user_id="1237967510",
+        redirect_uri="http://localhost:3333",
+        client_secret="d6d9d1b3fa7e4666bdf02d57ff99caea",
+        client_id="c12a5f323b644b0193a96e713f589a6f",
+    )
     reddit = CurrentDaysBands()
     songs_posted = reddit.get_bands(date)
     print("Found songs {}".format(songs_posted))

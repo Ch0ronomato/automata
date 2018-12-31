@@ -7,10 +7,6 @@ ADD ./pavement.py pavement.py
 ADD ./dags dags
 ADD ./test test
 
-ADD ./my_token .cache-1237967510
-USER root
-RUN chmod 0777 .cache-1237967510
-USER airflow
 ENV PATH "/usr/local/airflow/.local/bin:$PATH"
 
 ENTRYPOINT ["paver"]

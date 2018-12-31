@@ -3,10 +3,10 @@ import spotipy.util as util
 from datetime import date, datetime
 
 class SpotifyAPI:
-    def __init__(self):
+    def __init__(self, **kwargs):
         scope = 'playlist-modify-public playlist-modify-private user-follow-read'
-        self.user = '1237967510'
-        token = util.prompt_for_user_token(self.user, scope, client_id='80dbe1a0f3144ee39a55e4faaa5e1aea', client_secret='0e14e6cc3e7f4c05ac8cc49cde3a5df3', redirect_uri="http://localhost:3333")
+        self.user = kwargs.pop("user_id") or "123"
+        token = util.prompt_for_user_token(self.user, scope, **kwargs)
 
         if token:
             self.token = token
