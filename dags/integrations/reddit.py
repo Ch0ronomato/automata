@@ -23,7 +23,7 @@ class CurrentDaysBands:
         ]
 
     def _extract_song_info(self, post_title):
-        song_info = list(map(str.strip, post_title.split("-")))
+        song_info = list(map(str.strip, post_title.split(" - ")))
         for i in range(len(song_info)): 
             piece = song_info[i]
             for c in "[(":
