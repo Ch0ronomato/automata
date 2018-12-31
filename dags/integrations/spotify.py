@@ -13,7 +13,6 @@ class SpotifyAPI:
             self.sp = spotipy.Spotify(auth=token)
         else:
             raise RuntimeError("Couldn't authorize")
-        # current_user_followed_artists 
 
     
     def find_album_links(self, songs_by_bands):
