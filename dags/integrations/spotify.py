@@ -35,16 +35,22 @@ class SpotifyAPI:
         return album_ids
 
     def _get_oldest_matched_album(self, results):
-        date_format = '%Y-%m-%d'
         first_released_album = 0
         for i, track in enumerate(results["tracks"]["items"][1:]):
             oldest_track = results["tracks"]["items"][first_released_album]
-            current_track_release_date = datetime.strptime(track["album"]["release_date"], date_format)
-            oldest_track_release_date = datetime.strptime(oldest_track["album"]["release_date"], date_format)
+            current_track_release_date = self._get_album_release_year(track)
+            oldest_track_release_date = self._get_album_release_year(oldest_track)
             if current_track_release_date < oldest_track_release_date:
                 first_released_album = i + 1
         return results["tracks"]["items"][first_released_album]["album"]["id"]
 
+    def _get_album_release_year(self, track):
+        formats = {"day": "%Y-%m-%d", "month": "%Y-%m", "year": "%Y"}
+        return datetime.strptime(
+            track["album"]["release_date"],
+            formats[track["album"]["release_date_precision"]]
+        ) if (track["album"]["release_date_precision"] in formats.keys()) \
+          else datetime.now() # just assume it's too new sadly
 
     def create_playlist(self, playlist_name, spotify_album_ids):
         all_tracks = [
