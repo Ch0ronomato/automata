@@ -12,8 +12,12 @@ def test_dags():
     sh('python -m pytest --junitxml=/tmp/tests.xml --cov=dags --cov=util --cov-report xml:/tmp/coverage.xml --cov-report term-missing:skip-covered -v test/')
 
 @task
-def airflow():
-    sh('./entrypoint.sh webserver')
+@consume_args
+def airflow(args):
+    command = 'webserver'
+    if args:
+        command = args.pop()
+    sh(f'/entrypoint.sh {command}')
 
 @task
 @consume_args
