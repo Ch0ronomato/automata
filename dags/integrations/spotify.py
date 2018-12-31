@@ -22,6 +22,10 @@ class SpotifyAPI:
             results = self.sp.search(q=query)
             if len(results["tracks"]["items"]) == 0:
                 continue
+            results["tracks"]["items"] = list(filter(
+                lambda track: track["album"]["album_type"] == "album",
+                results["tracks"]["items"]
+            ))
             album_ids.append(self._get_oldest_matched_album(results))
             print("Found album {album} for {band}, {song}".format(
                 album=album_ids[-1], 

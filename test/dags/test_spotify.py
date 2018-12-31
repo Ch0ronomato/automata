@@ -16,7 +16,8 @@ class TestSpotify(unittest.TestCase):
                     "name": "Some Song",
                     "album": {
                         "id": "12345",
-                        "release_date": "2018-01-01"
+                        "release_date": "2018-01-01",
+                        "album_type": "album"
                     },
                     "artists": [{
                         "name": "Some Artist"
@@ -39,7 +40,9 @@ class TestSpotify(unittest.TestCase):
                     "name": "Some Song",
                     "album": {
                         "id": "12345",
-                        "release_date": "2018-01-01"
+                        "album_type": "album",
+                        "release_date": "2018-01-01",
+                        "release_date_precision": "day"
                     },
                     "artists": [{
                         "name": "Some Artist"
@@ -48,7 +51,9 @@ class TestSpotify(unittest.TestCase):
                     "name": "Some Song",
                     "album": {
                         "id": "2345",
-                        "release_date": "2019-01-01"
+                        "release_date": "2019-01-01",
+                        "album_type": "album",
+                        "release_date_precision": "day"
                     },
                     "artists": [{
                         "name": "Some Artist"
