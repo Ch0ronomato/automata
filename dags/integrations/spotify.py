@@ -26,12 +26,15 @@ class SpotifyAPI:
                 lambda track: track["album"]["album_type"] == "album",
                 results["tracks"]["items"]
             ))
-            album_ids.append(self._get_oldest_matched_album(results))
-            print("Found album {album} for {band}, {song}".format(
-                album=album_ids[-1], 
-                band=song_by_band["band"],
-                song=song_by_band["song"],
-            ))
+            if len(results["tracks"]["items"]) > 0:
+                album_ids.append(self._get_oldest_matched_album(results))
+                print("Found album {album} for {band}, {song}".format(
+                    album=album_ids[-1], 
+                    band=song_by_band["band"],
+                    song=song_by_band["song"],
+                ))
+            else:
+                print("Couldn't find an album for {band}, {song}".format(**song_by_band))
         return album_ids
 
     def _get_oldest_matched_album(self, results):
