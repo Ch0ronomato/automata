@@ -17,8 +17,10 @@ def get_spotify_albums(spotify, **context):
     return spotify.find_album_links(context['task_instance'].xcom_pull(task_ids='fetch_reddit_posts'))
 
 def make_spotify_playlist(spotify, **context):
+    yesterday = datetime.strptime(context['yesterday_ds'], '%Y-%m-%d')
+    playlist_date = yesterday - timedelta(days=yesterday.weekday())
     spotify.create_playlist(
-        "r/progmetal-" + context['yesterday_ds'], 
+        "r/progmetal-" + playlist_date.strftime("%Y-%m-%d"),
         context['task_instance'].xcom_pull(task_ids='fetch_spotify_albums')
     )
 
