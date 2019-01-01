@@ -1,12 +1,14 @@
-`current_user_followed_artists # auth`
-`user_playlist_create # auth`
-`spotify.search # non auth`
+# Automata
 
+Airflow project to scrape r/progmetal each day, and aggregate them into a spotify playlists
+for each week.
 
-1) get reddit posts
-2) find associated album
-3) filter by liked artists
-4) create final playlists
+## Setup
+`cp airflow_variables_api_config_template.json`
 
-client-id: 80dbe1a0f3144ee39a55e4faaa5e1aea
-client-secret: 0e14e6cc3e7f4c05ac8cc49cde3a5df3
+Add your own reddit client secrets and spotify secrets
+
+The OAuth token is cached by spotify under the `~/.cache-{userid}` file. Copy
+the contents entire and put it under `SPOTIFY_CLIENT_TOKEN_CACHE`.
+
+This is deployed using astronomer
