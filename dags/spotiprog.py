@@ -46,7 +46,7 @@ spotify = SpotifyAPI(
     redirect_uri=Variable.get("SPOTIFY_CLIENT_REDIRECT_URI"),
 )
 with open(f"/usr/local/airflow/.cache-{user_id}") as f:
-    Variable.set("SPOTIFY_CLIENT_CACHE_TOKEN", f.read())
+    Variable.set("SPOTIFY_CLIENT_TOKEN_CACHE", f.read())
 
 t1_get_bands = PythonOperator(
     task_id='fetch_reddit_posts',
